@@ -109,7 +109,20 @@ const iconsContainer = document.getElementById('icons');
 const coloredArray = colorIcons(icons, colors);
 print(coloredArray, iconsContainer);
 
+const types = getTypes(coloredArray);
+const select = document.getElementById('type');
+printOptions(types, select);
 
+// select.addEventListener("change", (val) => {
+//   console.log(val);
+// });
+
+select.onchange = function(element) {
+  const filtered = filterValues(icons, element.target.value);
+  print(filtered, iconsContainer);
+};
+
+// funzioni 
 function print(array, container) {
   container.innerHTML = '';
 
@@ -144,6 +157,26 @@ function getTypes(array) {
 
   });
   return types;
+}
+
+function printOptions(array, select) {
+  array.forEach((element) =>{
+    select.innerHTML += `<option value="${element}">${element}</option>`;
+  });
+}
+
+function filterValues(array, type) {
+  const filteredIcons = array.filter((element) => {
+    if (element.type === type) {
+      return true;
+    }
+    return false;
+  });
+
+  if (type === "") {
+    return array;
+  }
+  return filteredIcons;
 }
 
 
